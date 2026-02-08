@@ -12,10 +12,26 @@ spring:
       server:
         webflux:
           routes:
-            - id: order-service
+            - id: order-service-get
               uri: lb://order-service
               predicates:
                 - Path=/api/orders/**
+                - Method=GET
+              filters:
+                - name: RoleAccess
+                  args:
+                    roles: [CUSTOMER, ADMIN, THEATRE_DIRECTOR]
+                    methods: [GET]
+            - id: order-service-post
+              uri: lb://order-service
+              predicates:
+                - Path=/api/orders/**
+                - Method=POST
+              filters:
+                - name: RoleAccess
+                  args:
+                    roles: [CUSTOMER, ADMIN]
+                    methods: [POST]
             - id: order-service-docs
               uri: lb://order-service
               predicates:
@@ -26,6 +42,21 @@ spring:
               uri: lb://show-manager
               predicates:
                 - Path=/api/shows/**
+              filters:
+                - name: RoleAccess
+                  args:
+                    roles: [THEATRE_DIRECTOR, ADMIN]
+                    methods: [POST, PUT, PATCH, DELETE]
+            - id: theatre-manager-create
+              uri: lb://theatre-manager
+              predicates:
+                - Path=/api/theatres
+                - Method=POST
+              filters:
+                - name: RoleAccess
+                  args:
+                    roles: [ADMIN]
+                    methods: [POST]
             - id: show-manager-docs
               uri: lb://show-manager
               predicates:
@@ -36,6 +67,30 @@ spring:
               uri: lb://theatre-manager
               predicates:
                 - Path=/api/theatres/**,/api/halls/**
+              filters:
+                - name: RoleAccess
+                  args:
+                    roles: [THEATRE_DIRECTOR, ADMIN]
+                    methods: [POST, PUT, PATCH, DELETE]
+            - id: auth-manager-register
+              uri: lb://auth-manager
+              predicates:
+                - Path=/api/auth/register
+              filters:
+                - name: RoleAccess
+                  args:
+                    roles: [ADMIN]
+                    methods: [POST]
+            - id: auth-manager
+              uri: lb://auth-manager
+              predicates:
+                - Path=/api/auth/**
+            - id: auth-manager-docs
+              uri: lb://auth-manager
+              predicates:
+                - Path=/auth-manager/**
+              filters:
+                - StripPrefix=1
             - id: theatre-manager-docs
               uri: lb://theatre-manager
               predicates:
@@ -48,13 +103,28 @@ springdoc:
     enabled: true
   swagger-ui:
     path: /swagger-ui.html
-    urls:
+    url: /v3/api-docs/public
+    persist-authorization: true
+
+openapi:
+  aggregate:
+    title: HLS Public API
+    version: v1
+    excluded-path-prefixes:
+      - /inner
+    services:
       - name: order-service
         url: /order-manager/v3/api-docs
       - name: show-manager
         url: /show-manager/v3/api-docs
       - name: theatre-manager
         url: /theatre-manager/v3/api-docs
+      - name: auth-manager
+        url: /auth-manager/v3/api-docs
+
+auth:
+  jwt:
+    secret: ${AUTH_JWT_SECRET:u4f8r7v2r6n1k9z3p5t8q1m4x7y2c6b9a4s8d7f6g5h3j2k1l0}
 
 eureka:
   client:
