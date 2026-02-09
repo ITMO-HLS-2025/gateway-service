@@ -1,4 +1,4 @@
-package ru.itmo.hls.gatewayservice.openapi
+package ru.itmo.hls.gatewayservice.infrastructure.openapi
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties

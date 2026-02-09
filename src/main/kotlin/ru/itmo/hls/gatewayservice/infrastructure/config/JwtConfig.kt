@@ -1,4 +1,4 @@
-package ru.itmo.hls.gatewayservice.config
+package ru.itmo.hls.gatewayservice.infrastructure.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties

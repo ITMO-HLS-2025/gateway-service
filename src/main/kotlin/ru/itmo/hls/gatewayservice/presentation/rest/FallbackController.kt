@@ -1,4 +1,4 @@
-package ru.itmo.hls.gatewayservice
+package ru.itmo.hls.gatewayservice.presentation.rest
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

@@ -1,4 +1,4 @@
-package ru.itmo.hls.gatewayservice.openapi
+package ru.itmo.hls.gatewayservice.presentation.rest
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
+import ru.itmo.hls.gatewayservice.infrastructure.openapi.OpenApiAggregateProperties
 
 @RestController
 class OpenApiAggregateController(

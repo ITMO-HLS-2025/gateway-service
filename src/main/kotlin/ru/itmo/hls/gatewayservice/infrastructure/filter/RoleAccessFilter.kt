@@ -1,4 +1,4 @@
-package ru.itmo.hls.gatewayservice.filter
+package ru.itmo.hls.gatewayservice.infrastructure.filter
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -9,7 +9,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
-import ru.itmo.hls.gatewayservice.config.JwtProperties
+import ru.itmo.hls.gatewayservice.infrastructure.config.JwtProperties
 import java.nio.charset.StandardCharsets
 import org.slf4j.LoggerFactory
 
