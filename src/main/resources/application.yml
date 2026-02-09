@@ -97,6 +97,21 @@ spring:
                 - Path=/theatre-manager/**
               filters:
                 - StripPrefix=1
+            - id: file-manager
+              uri: lb://file-manager
+              predicates:
+                - Path=/api/documents/**
+              filters:
+                - name: RoleAccess
+                  args:
+                    roles: [CUSTOMER, ADMIN, THEATRE_DIRECTOR]
+                    methods: [GET, POST]
+            - id: file-manager-docs
+              uri: lb://file-manager
+              predicates:
+                - Path=/file-manager/**
+              filters:
+                - StripPrefix=1
 
 springdoc:
   api-docs:
@@ -121,6 +136,8 @@ openapi:
         url: /theatre-manager/v3/api-docs
       - name: auth-manager
         url: /auth-manager/v3/api-docs
+      - name: file-manager
+        url: /file-manager/v3/api-docs
 
 auth:
   jwt:
